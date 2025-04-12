@@ -99,27 +99,27 @@ def score_key(choice):
 def valid_input(used, counts, roll):
     # returns user input that would not cause the program to crash
     choice = input('How would you like to count this dice roll? ').lower()
-    choice_key = score_key(choice)
 
     # filters out invalid input
     if choice not in ACCEPTIONS:
         print('This is not a valid count')
         choice = valid_input(used, counts, roll)
+    else:
+        choice_key = score_key(choice)
+        # filters out choices that are impossible with the current roll
+        if choice_key not in counts and 'count' not in choice and 'chance' != choice and 'skip' != choice:
+            print(f"There is not a {choice_key} in this roll")
+            choice = valid_input(used, counts, roll)
 
-    # filters out choices that are impossible with the current roll
-    elif choice_key not in counts and 'count' not in choice and 'chance' != choice and 'skip' != choice:
-        print(f"There is not a {choice_key} in this roll")
-        choice = valid_input(used, counts, roll)
+        # makes sure the choice hasn't been used already
+        elif choice_key in used and choice_key != 'yahtzee':
+            print('There was already a score in that slot.')
+            choice = valid_input(used, counts, roll)
 
-    # makers sure the choice hasn't been used already
-    elif choice_key in used and choice_key != 'yahtzee':
-        print('There was already a score in that slot.')
-        choice = valid_input(used, counts, roll)
-
-    # makes sure the number the user wants to count is in the roll
-    elif 'count' in choice and get_count(choice) not in roll:
-        print(f'There are no {choice_key} in this roll.')
-        choice = valid_input(used, counts, roll)
+        # makes sure the number the user wants to count is in the roll
+        elif 'count' in choice and get_count(choice) not in roll:
+            print(f'There are no {choice_key} in this roll.')
+            choice = valid_input(used, counts, roll)
 
     return choice
 
