@@ -8,7 +8,7 @@ This program is a yahtzee console game built with python.
 
 * Clone the repo
 ```
-git clone https://github.com/wstab/wstab-pytzee.git
+git clone https://github.com/wstab/pytzee.git
 ```
 
 ### Executing program
